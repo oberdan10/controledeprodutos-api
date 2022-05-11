@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeProdutos_API.DTOs
+namespace ControleDeProdutos_API.DTOs.Item
 {
-    public class CreateItemDto
+    public class UpdateItemDto
     {
 
         [Required(ErrorMessage = "Campo Descrição Obrigatório!")]

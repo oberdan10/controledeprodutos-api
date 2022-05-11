@@ -1,72 +1,66 @@
 ﻿using AutoMapper;
 using ControleDeProdutos_API.Data;
-using ControleDeProdutos_API.DTOs.Item;
+using ControleDeProdutos_API.DTOs.Categoria;
 using ControleDeProdutos_API.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace ControleDeProdutos_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
 
-    public class ItemController : Controller
+    public class CategoriaController : Controller
     {
         private Data.AppContext _context;
         private IMapper _automapper;
 
-        public ItemController(Data.AppContext context, IMapper mapper) {
+        public CategoriaController(Data.AppContext context, IMapper mapper) {
             _context = context;
             _automapper = mapper;
         }
 
         [HttpPost]
-        public IActionResult AdicionaItem([FromBody] CreateItemDto itemDto)
+        public IActionResult AdicionaCategoria([FromBody] CreateCategoriaDto categoriaDto)
         {
-            Item item = _automapper.Map<Item>(itemDto);
-            _context.Itens.Add(item);
+            Categoria categoria = _automapper.Map<Categoria>(categoriaDto);
+            _context.Categorias.Add(categoria);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(BuscaItemPorCodigo), new {codigo = item.codigo}, item );
+            return CreatedAtAction(nameof(BuscaCategoriaPorCodigo), new {codigo = categoria.codigo}, categoria);
         }
 
         [HttpGet]
-        public IActionResult BuscarItem()
+        public IActionResult BuscarCategoria()
         {
-            return Ok(_context.Itens.Include(categoria => categoria.Categoria).ToList());
+            return Ok(_context.Categorias);
         }
 
         [HttpGet("{codigo}")]
-        public IActionResult BuscaItemPorCodigo(long codigo)
+        public IActionResult BuscaCategoriaPorCodigo(long codigo)
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Categoria categoria = _context.Categorias.FirstOrDefault(categoria => categoria.codigo == codigo);
 #pragma warning restore CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item != null) 
+            if (categoria != null) 
             {
-                ReadItemDto itemDto = _automapper.Map<ReadItemDto>(item);
-                return Ok(itemDto);
+                ReadCategoriaDto categoriaDto = _automapper.Map<ReadCategoriaDto>(categoria);
+                return Ok(categoriaDto);
             }
             return NotFound();
 
         }
 
         [HttpPut("{codigo}")]
-        public IActionResult AtualizaItem(long codigo, [FromBody] UpdateItemDto itemAtualizado) 
+        public IActionResult AtualizaCategoria(long codigo, [FromBody] UpdateCategoriaDto categoriaAtualizado) 
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Categoria categoria = _context.Categorias.FirstOrDefault(categoria => categoria.codigo == codigo);
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item == null) 
+            if (categoria == null) 
             { 
                 return NotFound(); 
             }
 
-            _automapper.Map(itemAtualizado,item);
-
-            //item.descricao = itemAtualizado.descricao;
-            //item.lote = itemAtualizado.lote;
-            //item.observacao = itemAtualizado.observacao;
+            _automapper.Map(categoriaAtualizado, categoria);
 
             _context.SaveChanges();
             return NoContent();
@@ -74,17 +68,17 @@ namespace ControleDeProdutos_API.Controllers
         }
 
         [HttpDelete("{codigo}")]
-        public IActionResult DeletarItem(long codigo)
+        public IActionResult DeletarCategoria(long codigo)
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Categoria categoria = _context.Categorias.FirstOrDefault(categoria => categoria.codigo == codigo);
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            _context.Remove(item);
+            _context.Remove(categoria);
             _context.SaveChanges();
             return NoContent();
 

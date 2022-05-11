@@ -21,5 +21,9 @@ namespace ControleDeProdutos_API.Models
         [StringLength(30)]
         public string? lote { get; set; }
 
+        public virtual Categoria Categoria { get; set; }
+
+        public long categoriaId { get; set; }
+
     }
 }

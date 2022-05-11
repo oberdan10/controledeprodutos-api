@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ControleDeProdutos_API.Models;
 
-namespace ControleDeProdutos_API.DTOs
+namespace ControleDeProdutos_API.DTOs.Item
 {
-    public class UpdateItemDto
+    public class ReadItemDto
     {
+        [Key]
+        [Required]
+        public long? codigo { get; set; }
 
         [Required(ErrorMessage = "Campo Descrição Obrigatório!")]
         [StringLength(60)]
@@ -16,5 +20,6 @@ namespace ControleDeProdutos_API.DTOs
         [Required(ErrorMessage = "Campo Lote Obrigatório!")]
         [StringLength(30)]
         public string? lote { get; set; }
+        public DateTime horaConsulta { get; set; } 
     }
 }

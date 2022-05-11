@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ControleDeProdutos_API.DTOs;
+using ControleDeProdutos_API.DTOs.Item;
 using ControleDeProdutos_API.Models;
 
 namespace ControleDeProdutos_API.Profiles
@@ -14,3 +14,6 @@ namespace ControleDeProdutos_API.Profiles
         }
     }
 }
+
+//Instalar AutoMapper.Extensions.Microsoft.DependencyInjection.
+//Instalar AutoMapper.

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeProdutos_API.DTOs.Item
+namespace ControleDeProdutos_API.Data.DTOs.Item
 {
     public class UpdateItemDto
     {
@@ -16,5 +16,7 @@ namespace ControleDeProdutos_API.DTOs.Item
         [Required(ErrorMessage = "Campo Lote Obrigatório!")]
         [StringLength(30)]
         public string? lote { get; set; }
+
+        public long categoriaId { get; set; }
     }
 }

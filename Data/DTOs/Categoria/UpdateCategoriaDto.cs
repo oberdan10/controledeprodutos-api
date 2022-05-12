@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeProdutos_API.DTOs.Categoria
+namespace ControleDeProdutos_API.Data.DTOs.Categoria
 {
     public class UpdateCategoriaDto
     {

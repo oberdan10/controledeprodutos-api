@@ -1,73 +1,66 @@
 ﻿using AutoMapper;
-using ControleDeProdutos_API.Data;
-using ControleDeProdutos_API.Data.DTOs.Item;
 using ControleDeProdutos_API.Data.DTOs.Nota;
 using ControleDeProdutos_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace ControleDeProdutos_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
-    public class ItemController : Controller
+    public class NotaController : Controller
     {
         private Data.AppContext _context;
         private IMapper _automapper;
 
-        public ItemController(Data.AppContext context, IMapper mapper) {
+        public NotaController(Data.AppContext context, IMapper mapper)
+        {
             _context = context;
             _automapper = mapper;
         }
 
         [HttpPost]
-        public IActionResult AdicionaItem([FromBody] CreateNotaDto itemDto)
+        public IActionResult AdicionaNota([FromBody] CreateNotaDto notaDto)
         {
-            Item item = _automapper.Map<Item>(itemDto);
-            _context.Itens.Add(item);
+            Nota nota = _automapper.Map<Nota>(notaDto);
+            _context.Notas.Add(nota);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(BuscaItemPorCodigo), new {codigo = item.codigo}, item );
+            return CreatedAtAction(nameof(BuscaNotaPorCodigo), new { codigo = nota.codigo }, nota);
         }
 
         [HttpGet]
-        public IActionResult BuscarItem()
+        public IActionResult BuscarNota()
         {
-            return Ok(_context.Itens.Include(categoria => categoria.Categoria).ToList());
+            return Ok(_context.Notas.Include(empresa => empresa.Empresa).ToList());
         }
 
         [HttpGet("{codigo}")]
-        public IActionResult BuscaItemPorCodigo(long codigo)
+        public IActionResult BuscaNotaPorCodigo(long codigo)
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Nota nota = _context.Notas.FirstOrDefault(nota => nota.codigo == codigo);
 #pragma warning restore CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item != null) 
+            if (nota != null)
             {
-                ReadItemDto itemDto = _automapper.Map<ReadItemDto>(item);
-                return Ok(itemDto);
+                ReadNotaDto notaDto = _automapper.Map<ReadNotaDto>(nota);
+                return Ok(notaDto);
             }
             return NotFound();
 
         }
 
         [HttpPut("{codigo}")]
-        public IActionResult AtualizaItem(long codigo, [FromBody] UpdateItemDto itemAtualizado) 
+        public IActionResult AtualizaNota(long codigo, [FromBody] UpdateNotaDto notaAtualizado)
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Nota nota = _context.Notas.FirstOrDefault(nota => nota.codigo == codigo);
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item == null) 
-            { 
-                return NotFound(); 
+            if (nota == null)
+            {
+                return NotFound();
             }
 
-            _automapper.Map(itemAtualizado,item);
-
-            //item.descricao = itemAtualizado.descricao;
-            //item.lote = itemAtualizado.lote;
-            //item.observacao = itemAtualizado.observacao;
+            _automapper.Map(notaAtualizado, nota);
 
             _context.SaveChanges();
             return NoContent();
@@ -75,17 +68,17 @@ namespace ControleDeProdutos_API.Controllers
         }
 
         [HttpDelete("{codigo}")]
-        public IActionResult DeletarItem(long codigo)
+        public IActionResult DeletarNota(long codigo)
         {
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            Item item = _context.Itens.FirstOrDefault(item => item.codigo == codigo);
+            Nota nota = _context.Notas.FirstOrDefault(nota => nota.codigo == codigo);
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
-            if (item == null)
+            if (nota == null)
             {
                 return NotFound();
             }
 
-            _context.Remove(item);
+            _context.Remove(nota);
             _context.SaveChanges();
             return NoContent();
 

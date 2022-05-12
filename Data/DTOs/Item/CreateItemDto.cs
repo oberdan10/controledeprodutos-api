@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeProdutos_API.DTOs.Item
+namespace ControleDeProdutos_API.Data.DTOs.Item
 {
     public class CreateItemDto
     {

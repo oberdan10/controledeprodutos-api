@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ControleDeProdutos_API.DTOs.Item;
+using ControleDeProdutos_API.Data.DTOs.Item;
 using ControleDeProdutos_API.Models;
 
 namespace ControleDeProdutos_API.Profiles

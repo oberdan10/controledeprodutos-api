@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ControleDeProdutos_API.Models
 {
@@ -23,6 +24,7 @@ namespace ControleDeProdutos_API.Models
 
         public virtual Categoria Categoria { get; set; }
 
+        [JsonIgnore]
         public long categoriaId { get; set; }
 
     }

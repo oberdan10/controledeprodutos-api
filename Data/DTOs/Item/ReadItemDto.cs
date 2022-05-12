@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ControleDeProdutos_API.Models;
 
-namespace ControleDeProdutos_API.DTOs.Item
+namespace ControleDeProdutos_API.Data.DTOs.Item
 {
     public class ReadItemDto
     {
@@ -20,6 +19,8 @@ namespace ControleDeProdutos_API.DTOs.Item
         [Required(ErrorMessage = "Campo Lote Obrigatório!")]
         [StringLength(30)]
         public string? lote { get; set; }
+        
+        public virtual Models.Categoria Categoria { get; set; }
         public DateTime horaConsulta { get; set; } 
     }
 }

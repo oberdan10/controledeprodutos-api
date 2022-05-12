@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ControleDeProdutos_API.DTOs.Categoria;
 using ControleDeProdutos_API.Models;
+using ControleDeProdutos_API.Data.DTOs.Categoria;
 
 namespace ControleDeProdutos_API.Profiles
 {

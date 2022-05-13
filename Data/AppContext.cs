@@ -28,7 +28,21 @@ namespace ControleDeProdutos_API.Data
             builder.Entity<Empresa>()
                 .HasMany(empresa => empresa.Nota)
                 .WithOne(nota => nota.Empresa)
-                .HasForeignKey(nota => nota.empresaId);
+                .HasForeignKey(nota => nota.empresaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Empresa>()
+                .HasMany(empresa => empresa.Cliente)
+                .WithOne(cliente => cliente.Empresa)
+                .HasForeignKey(nota => nota.empresaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Cliente>()
+                .Property(cliente => cliente.tipoCliente)
+                .HasConversion(
+                conversao => conversao.ToString(),
+                conversao => (TipoCliente)Enum.Parse(typeof(TipoCliente), conversao)
+                );
 
         }
 
@@ -37,5 +51,6 @@ namespace ControleDeProdutos_API.Data
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Nota> Notas { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }

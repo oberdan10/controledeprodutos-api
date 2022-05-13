@@ -7,9 +7,11 @@ namespace ControleDeProdutos_API.Data.DTOs.Nota
     {
         public long? codigo { get; set; }
 
-        public int? nota { get; set; }
+        public long? nota { get; set; }
 
-        public int? serie { get; set; }
+        public long? serie { get; set; }
+
+        public double? valorTotal { get; set; }
 
         [JsonIgnore]
         public long? empresaId { get; set; }

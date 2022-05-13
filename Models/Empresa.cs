@@ -13,11 +13,13 @@ namespace ControleDeProdutos_API.Models
         public string descricao { get; set; }
 
         [Required(ErrorMessage = "Campo CNPJ Obrigatório!")]
-        [StringLength(14)]
-        public string cnpj { get; set; }
+        public long cnpj { get; set; }
 
         [JsonIgnore]
         public virtual List<Funcionario>? Funcionario { get; set; }
+
+        [JsonIgnore]
+        public virtual List<Cliente>? Cliente { get; set; }
 
         [JsonIgnore]
         public virtual List<Nota>? Nota { get; set; }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleDeProdutos_API.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20220513001602_Tabelas")]
+    [Migration("20220513183759_Tabelas")]
     partial class Tabelas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,16 +42,43 @@ namespace ControleDeProdutos_API.Migrations
                     b.ToTable("Categorias");
                 });
 
+            modelBuilder.Entity("ControleDeProdutos_API.Models.Cliente", b =>
+                {
+                    b.Property<long?>("codigo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("cpf")
+                        .IsRequired()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("empresaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<string>("tipoCliente")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("codigo");
+
+                    b.HasIndex("empresaId");
+
+                    b.ToTable("Clientes");
+                });
+
             modelBuilder.Entity("ControleDeProdutos_API.Models.Empresa", b =>
                 {
                     b.Property<long>("codigo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<string>("cnpj")
-                        .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("varchar(14)");
+                    b.Property<long>("cnpj")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("descricao")
                         .IsRequired()
@@ -69,10 +96,9 @@ namespace ControleDeProdutos_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<string>("cpf")
+                    b.Property<long?>("cpf")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("bigint");
 
                     b.Property<long>("empresaId")
                         .HasColumnType("bigint");
@@ -130,19 +156,31 @@ namespace ControleDeProdutos_API.Migrations
                         .IsRequired()
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("nota")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
+                    b.Property<long?>("nota")
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("serie")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
+                    b.Property<long?>("serie")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("valorTotal")
+                        .HasColumnType("double");
 
                     b.HasKey("codigo");
 
                     b.HasIndex("empresaId");
 
                     b.ToTable("Notas");
+                });
+
+            modelBuilder.Entity("ControleDeProdutos_API.Models.Cliente", b =>
+                {
+                    b.HasOne("ControleDeProdutos_API.Models.Empresa", "Empresa")
+                        .WithMany("Cliente")
+                        .HasForeignKey("empresaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("ControleDeProdutos_API.Models.Funcionario", b =>
@@ -172,7 +210,7 @@ namespace ControleDeProdutos_API.Migrations
                     b.HasOne("ControleDeProdutos_API.Models.Empresa", "Empresa")
                         .WithMany("Nota")
                         .HasForeignKey("empresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Empresa");
@@ -185,6 +223,8 @@ namespace ControleDeProdutos_API.Migrations
 
             modelBuilder.Entity("ControleDeProdutos_API.Models.Empresa", b =>
                 {
+                    b.Navigation("Cliente");
+
                     b.Navigation("Funcionario");
 
                     b.Navigation("Nota");

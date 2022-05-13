@@ -8,10 +8,12 @@ namespace ControleDeProdutos_API.Models
         [Key]
         public long? codigo { get; set; }
 
-        public int? nota { get; set; }
+        public long? nota { get; set; }
 
-        public int? serie { get; set; }
-        
+        public long? serie { get; set; }
+
+        public double? valorTotal { get; set; }
+
         public virtual Empresa Empresa { get; set; }
 
         [JsonIgnore]

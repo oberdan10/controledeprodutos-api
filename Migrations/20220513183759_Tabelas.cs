@@ -37,8 +37,7 @@ namespace ControleDeProdutos_API.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     descricao = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    cnpj = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    cnpj = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,6 +72,31 @@ namespace ControleDeProdutos_API.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    codigo = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nome = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    cpf = table.Column<long>(type: "bigint", nullable: false),
+                    tipoCliente = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    empresaId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.codigo);
+                    table.ForeignKey(
+                        name: "FK_Clientes_Empresas_empresaId",
+                        column: x => x.empresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "codigo",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Funcionarios",
                 columns: table => new
                 {
@@ -80,8 +104,7 @@ namespace ControleDeProdutos_API.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nome = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    cpf = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    cpf = table.Column<long>(type: "bigint", nullable: false),
                     empresaId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -102,8 +125,9 @@ namespace ControleDeProdutos_API.Migrations
                 {
                     codigo = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nota = table.Column<int>(type: "int", maxLength: 10, nullable: true),
-                    serie = table.Column<int>(type: "int", maxLength: 10, nullable: true),
+                    nota = table.Column<long>(type: "bigint", nullable: true),
+                    serie = table.Column<long>(type: "bigint", nullable: true),
+                    valorTotal = table.Column<double>(type: "double", nullable: true),
                     empresaId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -114,9 +138,14 @@ namespace ControleDeProdutos_API.Migrations
                         column: x => x.empresaId,
                         principalTable: "Empresas",
                         principalColumn: "codigo",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_empresaId",
+                table: "Clientes",
+                column: "empresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionarios_empresaId",
@@ -136,6 +165,9 @@ namespace ControleDeProdutos_API.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Clientes");
+
             migrationBuilder.DropTable(
                 name: "Funcionarios");
 

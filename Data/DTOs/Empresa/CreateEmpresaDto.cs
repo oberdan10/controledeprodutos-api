@@ -10,8 +10,7 @@ namespace ControleDeProdutos_API.Data.DTOs.Empresa
         public string descricao { get; set; }
 
         [Required(ErrorMessage = "Campo CNPJ Obrigatório!")]
-        [StringLength(14)]
-        public string cnpj { get; set; }
+        public long cnpj { get; set; }
 
     }
 }

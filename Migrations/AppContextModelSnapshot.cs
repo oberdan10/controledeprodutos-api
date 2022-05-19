@@ -46,11 +46,10 @@ namespace ControleDeProdutos_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("cpf")
-                        .IsRequired()
+                    b.Property<long>("cpf")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("empresaId")
+                    b.Property<long?>("empresaId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("nome")
@@ -175,8 +174,7 @@ namespace ControleDeProdutos_API.Migrations
                     b.HasOne("ControleDeProdutos_API.Models.Empresa", "Empresa")
                         .WithMany("Cliente")
                         .HasForeignKey("empresaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Empresa");
                 });

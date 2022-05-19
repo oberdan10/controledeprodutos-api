@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ControleDeProdutos_API.Migrations
 {
-    public partial class Tabelas : Migration
+    public partial class tabelas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,8 +91,7 @@ namespace ControleDeProdutos_API.Migrations
                         name: "FK_Clientes_Empresas_empresaId",
                         column: x => x.empresaId,
                         principalTable: "Empresas",
-                        principalColumn: "codigo",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "codigo");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

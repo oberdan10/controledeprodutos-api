@@ -40,11 +40,23 @@ namespace ControleDeProdutos_API.Controllers
 #pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
             Cliente cliente = _context.Clientes.FirstOrDefault(cliente => cliente.codigo == codigo);
 #pragma warning restore CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
+
+
             if (cliente != null)
             {
-                ReadClienteDto clienteDto = _automapper.Map<ReadClienteDto>(cliente);
-                return Ok(clienteDto);
+                if (cliente.empresaId == null) {
+                    ReadClienteFisicoDto clienteFisicoDto = _automapper.Map<ReadClienteFisicoDto>(cliente);
+                    return Ok(clienteFisicoDto);
+                }
+                else
+                {
+                    ReadClienteJuridicoDto clienteJuridicoDto = _automapper.Map<ReadClienteJuridicoDto>(cliente);
+                    return Ok(clienteJuridicoDto);
+                }
+
+
             }
+
             return NotFound();
 
         }

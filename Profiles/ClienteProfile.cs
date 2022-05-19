@@ -9,7 +9,8 @@ namespace ControleDeProdutos_API.Profiles
         public ClienteProfile()
         {
             CreateMap<CreateClienteDto, Cliente>();
-            CreateMap<Cliente, ReadClienteDto>();
+            CreateMap<Cliente, ReadClienteJuridicoDto>();
+            CreateMap<Cliente, ReadClienteFisicoDto>();
             CreateMap<UpdateClienteDto, Cliente>();
         }
     }

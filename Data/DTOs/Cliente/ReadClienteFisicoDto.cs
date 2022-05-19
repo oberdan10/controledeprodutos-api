@@ -4,19 +4,16 @@ using System.Text.Json.Serialization;
 
 namespace ControleDeProdutos_API.Data.DTOs.Cliente
 {
-    public class CreateClienteDto
+    public class ReadClienteFisicoDto
     {
 
-        [Required(ErrorMessage = "Campo Nome Obrigatório!")]
-        [StringLength(60)]
+        public long? codigo { get; set; }
         public string nome { get; set; }
-
-        [Required(ErrorMessage = "Campo Cpf Obrigatório!")]
-        public long cpf { get; set; }
-
-        [Required(ErrorMessage = "Campo Tipo do Cliente Obrigatório!")]
+        public long? cpf { get; set; }
         public TipoCliente tipoCliente { get; set; }
 
+        [JsonIgnore]
         public long? empresaId { get; set; }
+
     }
 }

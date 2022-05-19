@@ -35,7 +35,7 @@ namespace ControleDeProdutos_API.Data
                 .HasMany(empresa => empresa.Cliente)
                 .WithOne(cliente => cliente.Empresa)
                 .HasForeignKey(nota => nota.empresaId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Cliente>()
                 .Property(cliente => cliente.tipoCliente)
@@ -43,6 +43,10 @@ namespace ControleDeProdutos_API.Data
                 conversao => conversao.ToString(),
                 conversao => (TipoCliente)Enum.Parse(typeof(TipoCliente), conversao)
                 );
+
+            builder.Entity<Cliente>()
+                .Property(m => m.empresaId)
+                .IsRequired(false);
 
         }
 

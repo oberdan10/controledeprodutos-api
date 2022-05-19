@@ -11,11 +11,11 @@ namespace ControleDeProdutos_API.Data.DTOs.Cliente
         public string nome { get; set; }
 
         [Required(ErrorMessage = "Campo Cpf Obrigatório!")]
-        public long? cpf { get; set; }
+        public long cpf { get; set; }
 
         [Required(ErrorMessage = "Campo Tipo do Cliente Obrigatório!")]
         public TipoCliente tipoCliente { get; set; }
 
-        public long empresaId { get; set; }
+        public long? empresaId { get; set; }
     }
 }

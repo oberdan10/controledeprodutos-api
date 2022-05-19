@@ -13,7 +13,7 @@ namespace ControleDeProdutos_API.Models
         public string nome { get; set; }
 
         [Required(ErrorMessage = "Campo Cpf Obrigatório!")]
-        public long? cpf { get; set; }
+        public long cpf { get; set; }
 
         [Required(ErrorMessage = "Campo Tipo do Cliente Obrigatório!")]
         public TipoCliente tipoCliente { get; set; }
@@ -21,6 +21,7 @@ namespace ControleDeProdutos_API.Models
         public virtual Empresa Empresa { get; set; }
 
         [JsonIgnore]
-        public long empresaId { get; set; }
+        
+        public long? empresaId { get; set; }
     }
 }
